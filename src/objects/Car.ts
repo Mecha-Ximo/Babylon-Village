@@ -1,4 +1,5 @@
 import {
+  Animation,
   Mesh,
   MeshBuilder,
   Scene,
@@ -60,6 +61,7 @@ export function createCar(scene: Scene): Mesh {
   wheelRB.position.z = -0.1;
   wheelRB.position.x = -0.2;
   wheelRB.position.y = 0.035;
+  wheelRB.animations = [createWheelAnimation()];
 
   const wheelRF = wheelRB.clone('wheelRF');
   wheelRF.position.x = 0.1;
@@ -80,5 +82,27 @@ export function createCar(scene: Scene): Mesh {
   car.rotation.x = -Math.PI / 2;
   car.position.y = 0.17;
 
+  scene.beginAnimation(wheelRB, 0, 30, true);
+  scene.beginAnimation(wheelLB, 0, 30, true);
+  scene.beginAnimation(wheelLF, 0, 30, true);
+  scene.beginAnimation(wheelRF, 0, 30, true);
+
   return car;
+}
+
+function createWheelAnimation(): Animation {
+  const wheelAnimation = new Animation(
+    'wheelAnimation',
+    'rotation.y',
+    30,
+    Animation.ANIMATIONTYPE_FLOAT,
+    Animation.ANIMATIONLOOPMODE_CYCLE
+  );
+
+  const wheelKeys = [];
+  wheelKeys.push({ frame: 0, value: 0 });
+  wheelKeys.push({ frame: 30, value: Math.PI * 2 });
+  wheelAnimation.setKeys(wheelKeys);
+
+  return wheelAnimation;
 }
