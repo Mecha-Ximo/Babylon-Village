@@ -11,9 +11,9 @@ export function createScene(engine: Engine): Scene {
 
   const camera = new ArcRotateCamera(
     'cam',
+    Math.PI / 3,
     Math.PI / 4,
-    Math.PI / 4,
-    10,
+    6,
     Vector3.Zero(),
     scene
   );

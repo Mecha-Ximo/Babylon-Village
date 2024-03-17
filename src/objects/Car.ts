@@ -39,6 +39,8 @@ export function createCar(scene: Scene): Mesh {
     scene,
     earcut
   );
+  car.animations = [createCarAnimation()];
+  scene.beginAnimation(car, 0, 210, true);
 
   const wheelFaceUV: Vector4[] = [];
   wheelFaceUV[0] = new Vector4(0, 0, 1, 1);
@@ -80,7 +82,9 @@ export function createCar(scene: Scene): Mesh {
   car.material = carMat;
 
   car.rotation.x = -Math.PI / 2;
-  car.position.y = 0.17;
+  car.position.y = 0.3;
+  car.position.z = 1.5;
+  car.scaling = new Vector3(2, 2, 2);
 
   scene.beginAnimation(wheelRB, 0, 30, true);
   scene.beginAnimation(wheelLB, 0, 30, true);
@@ -88,6 +92,26 @@ export function createCar(scene: Scene): Mesh {
   scene.beginAnimation(wheelRF, 0, 30, true);
 
   return car;
+}
+
+function createCarAnimation(): Animation {
+  const carAnimation = new Animation(
+    'carAnimation',
+    'position.x',
+    30,
+    Animation.ANIMATIONTYPE_FLOAT,
+    Animation.ANIMATIONLOOPMODE_CYCLE
+  );
+
+  const carKeys = [
+    { frame: 0, value: -6 },
+    { frame: 150, value: 7 },
+    { frame: 210, value: 7 },
+  ];
+
+  carAnimation.setKeys(carKeys);
+
+  return carAnimation;
 }
 
 function createWheelAnimation(): Animation {
