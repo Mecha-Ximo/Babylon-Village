@@ -19,7 +19,8 @@ export function createScene(engine: Engine): Scene {
   );
   camera.attachControl();
 
-  new HemisphericLight('ambient', new Vector3(-4, 8, -2), scene);
+  const light = new HemisphericLight('ambient', new Vector3(-4, 8, -2), scene);
+  light.intensity = 0.75;
 
   engine.runRenderLoop(() => scene.render());
 
